@@ -2,9 +2,6 @@ package com.jap.ticketing;
 
 public class Ticketing {
 
-   // schedule_no,route_no,ticket_from_stop_id,ticket_from_stop_seq_no,ticket_till_stop_id,
-    //ticket_till_stop_seq_no,ticket_date,ticket_time,total_ticket_amount,travelled_KM
-
     private String scheduleNo;
     private String routeNo;
     private int ticketFromStopId;

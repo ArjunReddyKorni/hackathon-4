@@ -56,7 +56,17 @@ public class TicketingImpl {
     }
 
     public List<Ticketing> sortBasedOnTheDistance(List<Ticketing> ticketingList){
-        ticketingList.sort((t1,t2) -> (int) (t2.getTravelledKM() - t1.getTravelledKM()));
+        ticketingList.sort((o1,o2) -> {
+            if(o1.getTravelledKM() == o2.getTravelledKM()){
+                return 0;
+            }
+            else if(o1.getTravelledKM() > o2.getTravelledKM()){
+                return -1;
+            }
+            else{
+                return 1;
+            }
+        });
         
         return ticketingList;
     }
