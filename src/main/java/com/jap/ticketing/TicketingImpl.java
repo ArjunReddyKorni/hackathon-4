@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class TicketingImpl {
@@ -13,35 +14,25 @@ public class TicketingImpl {
 
         FileReader fileReader = null;
         BufferedReader bufferedReader= null;
-        Ticketing []ticketings = null;
+
         List<Ticketing> ticketingList = new ArrayList<>();
 
         try {
-            fileReader = new FileReader(fileName);
-            bufferedReader = new BufferedReader(fileReader);
-            bufferedReader.readLine();
-            int count =0;
-            while ((bufferedReader.readLine()) != null) {
-                count++;
-            }
-            ticketings = new Ticketing[count];
+
             fileReader = new FileReader(fileName);
             bufferedReader = new BufferedReader(fileReader);
 
             bufferedReader.readLine();
             String line = null;
-            int i =0;
+
             while ((line = bufferedReader.readLine()) != null){
                 String[] split = line.split(",");
-                // schedule_no,route_no,ticket_from_stop_id,ticket_from_stop_seq_no,ticket_till_stop_id,
-                //ticket_till_stop_seq_no,ticket_date,ticket_time,total_ticket_amount,travelled_KM
 
-                ticketings[i] = new Ticketing(split[0],split[1],Integer.parseInt(split[2]),
+                ticketingList.add(new Ticketing(split[0],split[1],Integer.parseInt(split[2]),
                         Integer.parseInt(split[3]),Integer.parseInt(split[4]),Integer.parseInt(split[5]),
-                        split[6],split[7],Integer.parseInt(split[8]),Double.parseDouble(split[9]) );
+                        split[6],split[7],Integer.parseInt(split[8]),Double.parseDouble(split[9])) );
 
-                ticketingList.add(ticketings[i]);
-                i++;
+
             }
 
         }catch (FileNotFoundException e){
@@ -70,14 +61,17 @@ public class TicketingImpl {
         
         return ticketingList;
     }
-    public int collectionsFromSaleOfTickets(List<Ticketing> ticketingList){
+    public double collectionsFromSaleOfTickets(List<Ticketing> ticketingList){
 
-        int totalCollections = 0;
-        for (Ticketing element : ticketingList) {
-            
-            totalCollections += element.getTotalTicketAmount();
-        }
-        return totalCollections;
+        CollectionFromSaleOfTicket calculator = (ticketingList1) -> {
+            double sum = 0;
+            for (Ticketing ticketing : ticketingList1) {
+                sum += ticketing.getTotalTicketAmount();
+            }
+            return sum;
+        };
+
+        return calculator.totalCollection(ticketingList);
     }
 
     public static void main(String[] args) {
@@ -91,7 +85,7 @@ public class TicketingImpl {
         for (Ticketing element : ticketingList) {
             System.out.println("element = " + element);
         }
-        int totalCollection = ticketing.collectionsFromSaleOfTickets(ticketingList);
+        double totalCollection = ticketing.collectionsFromSaleOfTickets(ticketingList);
         System.out.println("totalCollection = " + totalCollection);
     }
 }

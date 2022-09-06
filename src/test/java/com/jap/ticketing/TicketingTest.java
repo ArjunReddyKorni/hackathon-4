@@ -40,7 +40,7 @@ public class TicketingTest {
     @Test
     public void totalCollection(){
         List<Ticketing> output = ticketingImpl.readFile(fileName);
-        assertEquals(10348,ticketingImpl.collectionsFromSaleOfTickets(output));
+        assertEquals(10348,ticketingImpl.collectionsFromSaleOfTickets(output),0.5);
     }
     @Test
     public void sortByDistance(){
@@ -49,11 +49,7 @@ public class TicketingTest {
         assertEquals(49.5,output1.get(0).getTravelledKM(),0.5);
 
     }
-    @Test(expected = NumberFormatException.class)
-    public void givenWrongDataFormatThrowsNumberFormatException() {
 
-       ticketingImpl.readFile(fileNameOfIncorrectFormat);
-    }
 
 
 }
